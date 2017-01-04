@@ -1,5 +1,3 @@
-
-
 configuration = {}
 configuration.particles = {
   {
@@ -14,7 +12,11 @@ configuration.particles = {
 -- * particlesSuffix
 -- * areaScale
 -- * first, boolean
--- * next, a set of ids
+-- * next, a list of upgrades
+-- ** suffix, in the prototype there will be name instead
+-- ** probability that this upgrade is chosen
+-- ** minDelay in ticks
+-- ** maxDelay in ticks
 configuration.treeEntities = {
   {
     id = "sapling",
@@ -22,7 +24,13 @@ configuration.treeEntities = {
     particleSuffix = "-sapling",
     areaScale = 0.1,
     first = true,
-    nextSuffixes = {""},
+    next = {
+      {
+        suffix = "",
+        probability = 1,
+        minDelay = 60,
+        maxDelay = 120
+      },
+    },
   },
 }
-
