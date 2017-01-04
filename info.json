@@ -1,0 +1,14 @@
+
+{
+  "name": "tree-growth",
+  "version": "1.0.0",
+  "factorio_version": "0.14",
+  "title": "Trees grow from saplings",
+  "author": "Graveeater",
+  "contact": "Graveeater on steam",
+  "description": "Allows saplings to grow to trees.",
+  "dependencies": 
+    [ "base >= 0.14"
+    , "?alien-biomes"
+    ]
+}
