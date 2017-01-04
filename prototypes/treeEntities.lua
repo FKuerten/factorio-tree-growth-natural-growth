@@ -8,6 +8,7 @@ local round = function(x) return math.floor(x+0.5) end
 local logger = Logger.new("tree-growth", "main", true)
 
 createSaplingEntityFromTree = function(oldTree)
+  local scale = 0.25
   logger.log("transforming tree " .. oldTree.name)
   local newName = oldTree.name .. "-sapling"
   local newTree = table.deepcopy(oldTree)
@@ -23,18 +24,18 @@ createSaplingEntityFromTree = function(oldTree)
   }
   newTree.corpse = nil
   newTree.remains_when_mined = nil
-  newTree.emissions_per_tick = oldTree.emissions_per_tick / 10
-  newTree.max_health = round(oldTree.max_health * 0.1)
-  newTree.collision_box = scaleBox(oldTree.collision_box, sqrt(0.1))
-  newTree.selection_box = scaleBox(oldTree.selection_box, sqrt(0.1))
+  newTree.emissions_per_tick = oldTree.emissions_per_tick * scale
+  newTree.max_health = round(oldTree.max_health * scale)
+  newTree.collision_box = scaleBox(oldTree.collision_box, sqrt(scale))
+  newTree.selection_box = scaleBox(oldTree.selection_box, sqrt(scale))
   if oldTree.drawing_box then
-    newTree.drawing_box = scaleBox(oldTree.drawing_box, sqrt(0.1))
+    newTree.drawing_box = scaleBox(oldTree.drawing_box, sqrt(scale))
   end
   if oldTree.pictures then
-    newTree.pictures = transformPictures(oldTree.pictures, 0.1)
+    newTree.pictures = transformPictures(oldTree.pictures, scale)
   end
   if oldTree.variations then
-    newTree.variations = transformVariations(oldTree.variations, 0.1)
+    newTree.variations = transformVariations(oldTree.variations, scale)
   end
   data:extend({newTree})
   return newTree
