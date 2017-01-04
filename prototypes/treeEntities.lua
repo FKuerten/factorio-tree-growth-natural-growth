@@ -7,7 +7,7 @@ local round = function(x) return math.floor(x+0.5) end
 
 local logger = Logger.new("tree-growth", "main", true)
 
-local createSaplingFromTree = function(oldTree)
+createSaplingFromTree = function(oldTree)
   logger.log("transforming tree " .. oldTree.name)
   local newName = oldTree.name .. "-sapling"
   local newTree = table.deepcopy(oldTree)
@@ -34,27 +34,4 @@ local createSaplingFromTree = function(oldTree)
     newTree.variations = transformVariations(oldTree.variations, 0.1)
   end
   return newTree
-end
-
-local oldTrees = data.raw.tree
-local newTrees = {}
-for _, oldTree in pairs(oldTrees) do
-  local skip = false
-  
-  if oldTree.subgroup ~= "trees" then
-    skip = true
-  end
-    
-  -- Abort if the tree is strange
-  if (not oldTree.pictures) and (not oldTree.variations) then
-    skip = true
-  end
-  
-  if not skip then   
-    table.insert(newTrees, createSaplingFromTree(oldTree))
-  end
-end
-
-for _, newTree in pairs(newTrees) do
-  data:extend({newTree})
 end
