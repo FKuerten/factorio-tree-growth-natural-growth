@@ -17,24 +17,24 @@ transformPicture = function(oldPic, scale)
   local linScale = sqrt(scale)
   local type = oldPic.type
   local newPic = table.deepcopy(oldPic)
-  if not type then  
-    newPic.width = round(oldPic.width * linScale)
-    newPic.height = round(oldPic.height * linScale)
+  if not type then
     if oldPic.shift then
       newPic.shift = { oldPic.shift[1] * linScale, oldPic.shift[2] * linScale}
     end
+    newPic.scale = linScale
   elseif type == "create-particle" then
     newPic.offset_deviation = scaleBox(oldPic.offset_deviation, linScale)
     newPic.initial_height = oldPic.initial_height * linScale
     newPic.initial_height_deviation = oldPic.initial_height_deviation * linScale
     newPic.speed_from_center = oldPic.speed_from_center * linScale
+    newPic.scale = linScale
   end
   return newPic
 end
 
 transformPictures = function(oldPictures, scale)
   local pictures = {}
-  for i, oldPic in pairs(oldPictures) do
+  for i, oldPic in ipairs(oldPictures) do
     pictures[i] = transformPicture(oldPic, scale)
   end
   return pictures
