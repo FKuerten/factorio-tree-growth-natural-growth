@@ -17,22 +17,19 @@ data:extend({
   },
 })
 
-local trees = data.raw.tree
-for _, tree in pairs(trees) do
-  if tree.subgroup == "trees" then
-    local name = tree.name .. "-sapling"
-    data:extend({
-      {
-        type = "item",
-        name = name,
-        icon = tree.icon,
-        flags = {"goes-to-main-inventory"},
-        subgroup = "tree-growth-saplings",
-        order = tree.order,
-        place_result = name,
-        fuel_value = "1MJ", -- todo
-        stack_size = 50,
-      },
-    })
-  end
+function createSaplingItemFromTree(tree)
+  local name = tree.name .. "-sapling"
+  data:extend({
+    {
+      type = "item",
+      name = name,
+      icon = tree.icon,
+      flags = {"goes-to-main-inventory"},
+      subgroup = "tree-growth-saplings",
+      order = tree.order,
+      place_result = name,
+      fuel_value = "1MJ", -- todo
+      stack_size = 50,
+    },
+  })
 end

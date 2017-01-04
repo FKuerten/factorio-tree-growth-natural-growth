@@ -7,7 +7,7 @@ local round = function(x) return math.floor(x+0.5) end
 
 local logger = Logger.new("tree-growth", "main", true)
 
-createSaplingFromTree = function(oldTree)
+createSaplingEntityFromTree = function(oldTree)
   logger.log("transforming tree " .. oldTree.name)
   local newName = oldTree.name .. "-sapling"
   local newTree = table.deepcopy(oldTree)
@@ -33,5 +33,5 @@ createSaplingFromTree = function(oldTree)
   if oldTree.variations then
     newTree.variations = transformVariations(oldTree.variations, 0.1)
   end
-  return newTree
+  data:extend({newTree})
 end

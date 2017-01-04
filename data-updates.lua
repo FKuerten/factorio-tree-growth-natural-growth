@@ -10,7 +10,7 @@ for _, oldTree in pairs(oldTrees) do
   end
 
   if not skip then
-    local newTree = createSaplingFromTree(oldTree)
-    data:extend({newTree})
+    createSaplingEntityFromTree(oldTree)
+    createSaplingItemFromTree(oldTree)
   end
 end
