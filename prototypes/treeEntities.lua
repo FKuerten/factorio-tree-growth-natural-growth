@@ -66,19 +66,6 @@ createEntityFromTree = function(options, oldTree)
     newTree.variations = transformVariations(oldTree.variations, options.particleSuffix or "", areaScale)
   end
 
-  -- if options.next then
-    -- newTree["tree-growth"] = {}
-    -- newTree["tree-growth"].nextTrees = {}
-    -- for i, data in ipairs(options.next) do
-      -- newTree["tree-growth"].nextTrees[i] = {
-        -- name = oldTree.name .. data.suffix,
-        -- firstDelay = data.firstDelay or data.delay,
-        -- delay = data.delay,
-        -- probability = data.probability,
-      -- }
---    end
---  end
-
   data:extend({newTree})
   return newTree
 end
