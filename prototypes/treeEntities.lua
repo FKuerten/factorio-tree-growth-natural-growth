@@ -2,13 +2,29 @@ require "stdlib/string"
 require "stdlib/log/logger"
 require "util/entities"
 
+local saplingAreaScale = 0.25
+
 local sqrt = math.sqrt
 local round = function(x) return math.floor(x+0.5) end
 
 local logger = Logger.new("tree-growth", "main", true)
 
+-- We need smaller particles for smaller trees
+local function scaleParticle(oldParticle, suffix, areaScale)
+  local newParticle = table.deepcopy(oldParticle)
+  newParticle.name = oldParticle.name .. suffix
+  newParticle.pictures = transformPictures(oldParticle.pictures, areaScale)
+  newParticle.shadows = transformPictures(oldParticle.shadows, areaScale)
+  return newParticle
+end
+
+data:extend({
+  scaleParticle(data.raw["leaf-particle"]["leaf-particle"], "-sapling", saplingAreaScale),
+  scaleParticle(data.raw["particle"]["branch-particle"], "-sapling", saplingAreaScale),
+})
+
 createSaplingEntityFromTree = function(oldTree)
-  local scale = 0.25
+  local scale = saplingAreaScale
   logger.log("transforming tree " .. oldTree.name)
   local newName = oldTree.name .. "-sapling"
   local newTree = table.deepcopy(oldTree)
@@ -35,7 +51,7 @@ createSaplingEntityFromTree = function(oldTree)
     newTree.pictures = transformPictures(oldTree.pictures, scale)
   end
   if oldTree.variations then
-    newTree.variations = transformVariations(oldTree.variations, scale)
+    newTree.variations = transformVariations(oldTree.variations, "-sapling", scale)
   end
   data:extend({newTree})
   return newTree
