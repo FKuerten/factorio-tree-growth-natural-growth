@@ -7,7 +7,7 @@ local round = function(x) return math.floor(x+0.5) end
 
 local logger = Logger.new("tree-growth", "main", true)
 
-local transformTree = function(oldTree)
+local createSaplingFromTree = function(oldTree)
   logger.log("transforming tree " .. oldTree.name)
   local newName = oldTree.name .. "-sapling"
   local newTree = table.deepcopy(oldTree)
@@ -47,16 +47,11 @@ for _, oldTree in pairs(oldTrees) do
     
   -- Abort if the tree is strange
   if (not oldTree.pictures) and (not oldTree.variations) then
-    --skip = true
+    skip = true
   end
   
-  --if not oldTree.emissions_per_tick then
-  --  skip = true
-  --  logger.log("skipping " .. oldTree.name .. " because it has no emissions")
-  --end
-  
   if not skip then   
-    table.insert(newTrees, transformTree(oldTree))
+    table.insert(newTrees, createSaplingFromTree(oldTree))
   end
 end
 
