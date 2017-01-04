@@ -21,6 +21,8 @@ createSaplingEntityFromTree = function(oldTree)
     mining_time = 0.1,
     result = newName,
   }
+  newTree.corpse = nil
+  newTree.remains_when_mined = nil
   newTree.emissions_per_tick = oldTree.emissions_per_tick / 10
   newTree.max_health = round(oldTree.max_health * 0.1)
   newTree.collision_box = scaleBox(oldTree.collision_box, sqrt(0.1))
