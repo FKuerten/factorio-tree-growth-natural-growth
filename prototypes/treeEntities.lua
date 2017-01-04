@@ -34,4 +34,5 @@ createSaplingEntityFromTree = function(oldTree)
     newTree.variations = transformVariations(oldTree.variations, 0.1)
   end
   data:extend({newTree})
+  return newTree
 end
