@@ -14,6 +14,7 @@ createSaplingEntityFromTree = function(oldTree)
   newTree.name = newName
   newTree.subgroup = "tree-growth-saplings" -- todo why is this an item subgroup?
   newTree.autoplace = nil
+  newTree.flags = {"placeable-neutral", "breaths-air"}
   newTree.minable = {
     count = 1,
     mining_particle = "wooden-particle",
