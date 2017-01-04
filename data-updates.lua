@@ -1,5 +1,6 @@
 require "prototypes/treeItems"
 require "prototypes/treeEntities"
+require "config"
 
 local createRecipeForSapling = function(saplingItem)
   local recipe = {
@@ -13,6 +14,13 @@ local createRecipeForSapling = function(saplingItem)
   return recipe
 end
 
+-- Create particles for small trees
+for _, optionsTable in pairs(configuration.particles) do
+  local suffix = optionsTable.suffix or ("-" .. optionsTable.id)
+  createParticles(optionsTable.suffix, optionsTable.areaScale)
+end
+
+-- Loop over all existing trees
 local oldTrees = data.raw.tree
 for _, oldTree in pairs(oldTrees) do
   local skip = false
@@ -22,7 +30,7 @@ for _, oldTree in pairs(oldTrees) do
   end
 
   if not skip then
-    createSaplingEntityFromTree(oldTree)
+    createTreeEntityHierarchyForTree(configuration.treeEntities, oldTree)
     local saplingItem = createSaplingItemFromTree(oldTree)
     createRecipeForSapling(saplingItem)
   end
