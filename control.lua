@@ -60,7 +60,6 @@ do
 end
 
 local onTreePlaced = function(entity)
-  
   -- The decision of the next upgrade is done early
   local prototype = entity.prototype
   local nextTrees = getNextTreeData(prototype)
@@ -68,18 +67,16 @@ local onTreePlaced = function(entity)
     return -- final tree or something else
   end
   local nextTree = pickRandomTree(nextTrees)
-  
+
   -- Decide when to upgrade
   local delay = nextTree.minDelay + round(math.random() * (nextTree.maxDelay - nextTree.minDelay))
-  
+
   local data = {
     entity = entity,
     nextName = nextTree.name,
     tickUpgrade = game.tick + delay,
   }
-  
-  entity.surface.print("tree placed: " .. prototype.name .. " will upgrade to: " .. nextTree.name)
-  
+
   table.insert(global.growingTrees, data)
   table.sort(global.growingTrees, treeSorter)
   global.nextGrowth = global.growingTrees[1].tickUpgrade

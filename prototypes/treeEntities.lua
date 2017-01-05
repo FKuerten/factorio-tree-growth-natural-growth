@@ -24,6 +24,7 @@ function createParticles(suffix, areaScale)
 end
 
 -- @param options a tree entity option table
+-- @param an old tree
 createEntityFromTree = function(options, oldTree)
   logger.log("transforming tree " .. oldTree.name)
   local suffix = options.suffix or ("-" .. options.id)
