@@ -1,5 +1,6 @@
 require "stdlib/log/logger"
 require "util/entities"
+require "config"
 
 local saplingAreaScale = 0.25
 
@@ -33,9 +34,11 @@ createEntityFromTree = function(options, oldTree)
   local newTree = table.deepcopy(oldTree)
   newTree.name = newName
   if options.first then
-    newTree.subgroup = "tree-growth-saplings" -- todo why is this an item subgroup?
+    newTree.subgroup = tree_growth.groups.sapling -- todo why is this an item subgroup?
+  elseif options.next and options.next[1] then
+    newTree.subgroup = tree_growth.groups.intermediate
   else
-    newTree.subgroup = "trees"
+    newTree.subgroup = tree_growth.groups.mature
   end
 
   newTree.autoplace = nil

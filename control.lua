@@ -89,8 +89,10 @@ end
 
 local onEntityPlaced = function(event)
   local entity = event.created_entity
+  local subgroup = entity.prototype.subgroup.name
   --entity.surface.print("subgroup: " .. entity.prototype.subgroup.name)
-  if entity.prototype.subgroup.name == "tree-growth-saplings" then
+  if subgroup == tree_growth.groups.sapling or
+     subgroup == tree_growth.groups.intermediate then
     onTreePlaced(entity)
   end
 end

@@ -1,3 +1,4 @@
+require "config"
 --require "stdlib/string"
 --require "stdlib/log/logger"
 
@@ -11,9 +12,21 @@ data:extend({
   },
   {
     type = "item-subgroup",
-    name = "tree-growth-saplings",
+    name = tree_growth.groups.sapling,
+    group = "tree-growth",
+    order = "a",
+  },
+  {
+    type = "item-subgroup",
+    name = tree_growth.groups.intermediate,
     group = "tree-growth",
     order = "b",
+  },
+  {
+    type = "item-subgroup",
+    name = tree_growth.groups.mature,
+    group = "tree-growth",
+    order = "c",
   },
 })
 
