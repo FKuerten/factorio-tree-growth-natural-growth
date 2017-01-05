@@ -1,6 +1,4 @@
 require "config"
---require "stdlib/string"
---require "stdlib/log/logger"
 
 data:extend({
   {

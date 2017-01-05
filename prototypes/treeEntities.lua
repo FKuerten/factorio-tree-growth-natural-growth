@@ -2,8 +2,6 @@ require "stdlib/log/logger"
 require "util/entities"
 require "config"
 
-local saplingAreaScale = 0.25
-
 local sqrt = math.sqrt
 local round = function(x) return math.floor(x+0.5) end
 
@@ -18,7 +16,7 @@ local function scaleParticle(oldParticle, suffix, areaScale)
   return newParticle
 end
 
-function createParticles (suffix, areaScale)
+function createParticles(suffix, areaScale)
   data:extend({
     scaleParticle(data.raw["leaf-particle"]["leaf-particle"], suffix, areaScale),
     scaleParticle(data.raw["particle"]["branch-particle"], suffix, areaScale),

@@ -1,7 +1,5 @@
-require "stdlib/log/logger"
 require "stdlib/string"
 require "config"
-local logger = Logger.new("tree-growth", "main", true)
 local round = function(x) return math.floor(x+0.5) end
 
 local initialize = function()
@@ -79,7 +77,6 @@ local onTreePlaced = function(entity)
     tickUpgrade = game.tick + delay,
   }
   
-  logger.log("tree placed: " .. prototype.name .. " will upgrade to: " .. nextTree.name)
   entity.surface.print("tree placed: " .. prototype.name .. " will upgrade to: " .. nextTree.name)
   
   table.insert(global.growingTrees, data)
@@ -102,7 +99,6 @@ local growTree = function(entry)
   local nextName = entry.nextName  
   local surface = entity.surface
   local position = entity.position
-  logger.log("tree grown: " .. entity.prototype.name .. " to " .. nextName)
   surface.print("tree grown: " .. entity.prototype.name .. " to " .. nextName)
   entity.destroy()
   local newEntity = surface.create_entity({
