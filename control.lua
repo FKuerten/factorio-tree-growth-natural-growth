@@ -34,27 +34,28 @@ end
 local getNextTreeData
 do
   local nextTreeData = {}
-  getNextTreeData = function(name)
+  getNextTreeData = function(prototype)
+    local name = prototype.name
+    if prototype.subgroup.name == tree_growth.groups.sapling or
+       prototype.subgroup.name == tree_growth.groups.intermediate then
+      -- ok
+    elseif prototype.subgroup.name == tree_growth.groups.mature then
+      -- mature has no next
+      return
+    else
+      -- maybe a mature tree, maybe something else, nothing we can grow
+      return
+    end
+
+    -- cached?
     if nextTreeData[name] then 
       return nextTreeData[name]
     end
-    for _, optionTable in ipairs(configuration.treeEntities) do
-      local suffix = optionTable.suffix or ("-" .. optionTable.id)
-      if string.ends_with(name, suffix) then
-        local prefix = string.sub(name, 0, -(string.len(suffix)+1))
-        local nextData = {}
-        for i, data in ipairs(optionTable.next) do
-          nextData[i] = {
-            name = prefix .. data.suffix,
-            minDelay = data.minDelay,
-            maxDelay = data.maxDelay,
-            probability = data.probability,
-          }
-        end
-        nextTreeData[name] = nextData
-        return nextData
-      end
-    end
+    -- not cached
+
+    local nextData = loadstring(prototype.order)()
+    nextTreeData[name] = nextData
+    return nextData
   end
 end
 
@@ -62,9 +63,9 @@ local onTreePlaced = function(entity)
   
   -- The decision of the next upgrade is done early
   local prototype = entity.prototype
-  local nextTrees = getNextTreeData(prototype.name)
+  local nextTrees = getNextTreeData(prototype)
   if not nextTrees then
-    return -- final tree
+    return -- final tree or something else
   end
   local nextTree = pickRandomTree(nextTrees)
   

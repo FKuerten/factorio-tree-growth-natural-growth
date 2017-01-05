@@ -67,6 +67,22 @@ createEntityFromTree = function(options, oldTree)
     newTree.variations = transformVariations(oldTree.variations, options.particleSuffix or "", areaScale)
   end
 
+  if options.next then
+    local nextTrees = {}
+    for i, data in ipairs(options.next) do
+      assert((data.minDelay and data.maxDelay) or data.delay, "need to specify at minDelay and maxDelay or delay")
+      nextTrees[i] = {
+        name = oldTree.name .. data.suffix,
+        minDelay = data.minDelay or data.delay,
+        maxDelay = data.maxDelay or data.delay,
+        probability = data.probability,
+      }
+    end
+    newTree.order = serpent.dump(nextTrees)
+  else
+    newTree.order = nil
+  end
+
   data:extend({newTree})
   return newTree
 end
