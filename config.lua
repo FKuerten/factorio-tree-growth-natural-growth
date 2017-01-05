@@ -29,7 +29,7 @@ configuration.treeEntities = {
         suffix = "",
         probability = 1,
         minDelay = 60,
-        maxDelay = 120
+        maxDelay = 120,
       },
     },
   },
