@@ -9,6 +9,5 @@
   "description": "Allows saplings to grow to trees.",
   "dependencies": 
     [ "base >= 0.14"
-    , "?alien-biomes"
     ]
 }

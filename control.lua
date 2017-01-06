@@ -1,5 +1,4 @@
-require "stdlib/string"
-require "config"
+require "tree-growth-lib/constants"
 local round = function(x) return math.floor(x+0.5) end
 
 local initialize = function()
