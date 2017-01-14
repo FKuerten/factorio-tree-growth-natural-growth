@@ -107,8 +107,10 @@ local growTree = function(entry)
     position = position,
     -- force?
   })
-  -- it appears that create_entity does not trigger events
-  onTreePlaced(newEntity)
+  if newEntity then
+    -- it appears that create_entity does not trigger events
+    game.raise_event(defines.events.on_built_entity, {name = "on_created_entity", tick=game.tick, created_entity = newEntity})
+  end
 end
 
 local onTick = function(event)
