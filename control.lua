@@ -9,6 +9,12 @@ local initialize = function()
   end
 end
 
+local onConfigurationChanged = function()
+  global.groups = nil
+  global.treeData = nil
+  initialize()
+end
+
 local treeSorter = function(a,b)
   return a.tickUpgrade < b.tickUpgrade
 end
@@ -122,6 +128,7 @@ end
 
 script.on_init(initialize)
 script.on_load(initialize)
+script.on_configuration_changed(onConfigurationChanged)
 script.on_event(defines.events.on_built_entity, onEntityPlaced)
 script.on_event(defines.events.on_robot_built_entity, onEntityPlaced)
 script.on_event(defines.events.on_tick, onTick)
