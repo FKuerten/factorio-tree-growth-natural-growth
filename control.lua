@@ -32,38 +32,33 @@ local pickRandomTree = function(nextTrees)
   return lastEntry
 end
 
-local getNextTreeData
-do
-  local nextTreeData = {}
-  getNextTreeData = function(prototype)
-    local name = prototype.name
-    if prototype.subgroup.name == tree_growth.groups.sapling or
-       prototype.subgroup.name == tree_growth.groups.intermediate then
-      -- ok
-    elseif prototype.subgroup.name == tree_growth.groups.mature then
-      -- mature has no next
-      return
-    else
-      -- maybe a mature tree, maybe something else, nothing we can grow
-      return
-    end
+local getTreeData = function(name)
+  return remote.call("tree-growth-core", "getTreeData", name)
+end
 
-    -- cached?
-    if nextTreeData[name] then 
-      return nextTreeData[name]
-    end
-    -- not cached
-
-    local nextData = loadstring(prototype.order)()
-    nextTreeData[name] = nextData
-    return nextData
+local getNextData = function (prototype)
+  local name = prototype.name
+  if prototype.subgroup.name == global.groups.sapling or
+     prototype.subgroup.name == global.groups.intermediate then
+    -- ok
+  elseif prototype.subgroup.name == global.groups.mature then
+    -- mature has no next
+    return
+  else
+    -- maybe a mature tree, maybe something else, nothing we can grow
+    return
   end
+  global.nextData = global.nextData or {}
+  if not global.nextData[name] then
+    global.nextData[name] = getTreeData(name).upgrades
+  end
+  return global.nextData[name]
 end
 
 local onTreePlaced = function(entity)
   -- The decision of the next upgrade is done early
   local prototype = entity.prototype
-  local nextTrees = getNextTreeData(prototype)
+  local nextTrees = getNextData(prototype)
   if not nextTrees then
     return -- final tree or something else
   end
