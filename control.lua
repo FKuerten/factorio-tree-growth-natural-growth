@@ -1,9 +1,11 @@
-require "tree-growth-lib/constants"
 local round = function(x) return math.floor(x+0.5) end
 
 local initialize = function()
   if not global.growingTrees then
     global.growingTrees = {}
+  end
+  if not global.groups then
+    global.groups = remote.call("tree-growth-core", "getGroups")
   end
 end
 
@@ -85,8 +87,8 @@ local onEntityPlaced = function(event)
   local entity = event.created_entity
   local subgroup = entity.prototype.subgroup.name
   --entity.surface.print("subgroup: " .. entity.prototype.subgroup.name)
-  if subgroup == tree_growth.groups.sapling or
-     subgroup == tree_growth.groups.intermediate then
+  if subgroup == global.groups.sapling or
+     subgroup == global.groups.intermediate then
     onTreePlaced(entity)
   end
 end
