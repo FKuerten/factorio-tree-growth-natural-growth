@@ -99,7 +99,7 @@ local growTree = function(entry)
   local nextName = entry.nextName  
   local surface = entity.surface
   local position = entity.position
-  surface.print("tree grown: " .. entity.prototype.name .. " to " .. nextName)
+  --surface.print("tree grown: " .. entity.prototype.name .. " to " .. nextName)
   entity.destroy()
   local newEntity = surface.create_entity({
     name = nextName, 
