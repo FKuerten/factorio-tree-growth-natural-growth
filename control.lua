@@ -19,6 +19,32 @@ local treeSorter = function(a,b)
   return a.tickUpgrade < b.tickUpgrade
 end
 
+local filterTrees = function(nextTrees, tile, variation)
+  local result = {}
+  for _, entry in ipairs(nextTrees) do
+    local validTile = false
+    if type(entry.tiles) == 'nil' or entry.tiles == true then
+      validTile = true
+    elseif type(entry.tiles) == 'table' then
+      validTile = entry.tiles[tile]
+    end
+    
+    local validVariation = false
+    if entry.variations == 'id' or entry.variations == 'random' then
+      validVariation = true
+    elseif type(entry.variations) == 'table' then
+      if entry.variation[variation] then
+        validVariation = true
+      end
+    end
+    
+    if validTile and validVariation then
+      table.insert(result, entry)
+    end
+  end
+  return result
+end
+
 local pickRandomTree = function(nextTrees)
   local sum = 0
   local lastEntry
@@ -36,6 +62,16 @@ local pickRandomTree = function(nextTrees)
   end
   -- should not happen.
   return lastEntry
+end
+
+local pickRandomVariation = function(entry, oldVariation)
+  if entry.variations == 'id' then
+    return oldVariation
+  elseif entry.variations == 'random' then
+    return 'random'
+  else 
+    return entry.variations[oldVariation]
+  end
 end
 
 local getTreeData = function(name)
@@ -68,7 +104,12 @@ local onTreePlaced = function(entity)
   if not nextTrees then
     return -- final tree or something else
   end
+  local position = entity.position
+  local surface = entity.surface
+  local tile = surface.get_tile(position)
+  local nextTrees = filterTrees(nextTrees, tile.name, entity.graphics_variation)
   local nextTree = pickRandomTree(nextTrees)
+  local newVaration = pickRandomVariation(nextTree, entity.graphics_variation)
 
   -- Decide when to upgrade
   local delay = nextTree.minDelay + round(math.random() * (nextTree.maxDelay - nextTree.minDelay))
@@ -76,6 +117,7 @@ local onTreePlaced = function(entity)
   local data = {
     entity = entity,
     nextName = nextTree.name,
+    variation = newVariation,
     tickUpgrade = game.tick + delay,
   }
 
@@ -99,6 +141,7 @@ local growTree = function(entry)
   local nextName = entry.nextName  
   local surface = entity.surface
   local position = entity.position
+  local newVariation = entry.variation
   --surface.print("tree grown: " .. entity.prototype.name .. " to " .. nextName)
   entity.destroy()
   local newEntity = surface.create_entity({
@@ -108,6 +151,9 @@ local growTree = function(entry)
     -- force?
   })
   if newEntity then
+    if type(newVaration) == 'number' then
+      newEntity.graphics_variation = newVariation
+    end
     -- it appears that create_entity does not trigger events
     game.raise_event(defines.events.on_built_entity, {name = "on_created_entity", tick=game.tick, created_entity = newEntity})
   end
