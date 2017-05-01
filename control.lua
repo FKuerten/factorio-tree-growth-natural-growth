@@ -160,7 +160,7 @@ local growTree = function(entry)
       newEntity.graphics_variation = newVariation
     end
     -- it appears that create_entity does not trigger events
-    game.raise_event(defines.events.on_built_entity, {name = "on_created_entity", tick=game.tick, created_entity = newEntity})
+    script.raise_event(defines.events.on_built_entity, {name = "on_created_entity", tick=game.tick, created_entity = newEntity})
   end
 end
 
