@@ -64,7 +64,7 @@ local pickRandomTree = function(nextTrees)
   return lastEntry
 end
 
-local pickRandomVariation = function(entry, oldVariation)
+local pickVariation = function(entry, oldVariation)
   if entry.variations == 'id' then
     return oldVariation
   elseif entry.variations == 'random' then
@@ -109,7 +109,7 @@ local onTreePlaced = function(entity)
   local tile = surface.get_tile(position)
   local nextTrees = filterTrees(nextTrees, tile.name, entity.graphics_variation)
   local nextTree = pickRandomTree(nextTrees)
-  local newVaration = pickRandomVariation(nextTree, entity.graphics_variation)
+  local newVariation = pickVariation(nextTree, entity.graphics_variation)
 
   -- Decide when to upgrade
   local delay = nextTree.minDelay + round(math.random() * (nextTree.maxDelay - nextTree.minDelay))
