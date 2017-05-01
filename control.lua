@@ -108,7 +108,12 @@ local onTreePlaced = function(entity)
   local surface = entity.surface
   local tile = surface.get_tile(position)
   local nextTrees = filterTrees(nextTrees, tile.name, entity.graphics_variation)
+  assert(nextTrees)
+  if #nextTrees == 0 then 
+    return 
+  end
   local nextTree = pickRandomTree(nextTrees)
+  assert(nextTree)
   local newVariation = pickVariation(nextTree, entity.graphics_variation)
 
   -- Decide when to upgrade
