@@ -30,6 +30,7 @@ local filterTrees = function(nextTrees, tile, variation)
     end
     
     local validVariation = false
+    --game.surfaces["nauvis"].print(tostring(entry.variations))
     if entry.variations == 'id' or entry.variations == 'random' then
       validVariation = true
     elseif type(entry.variations) == 'table' then
@@ -37,6 +38,7 @@ local filterTrees = function(nextTrees, tile, variation)
         validVariation = true
       end
     end
+    --game.surfaces["nauvis"].print("validTile=" .. tostring(validTile) .. " validVariation=" .. tostring(validVariation))
     
     if validTile and validVariation then
       table.insert(result, entry)
@@ -156,6 +158,7 @@ local growTree = function(entry)
     -- force?
   })
   if newEntity then
+    --surface.print("newVariation="..tostring(newVariation))
     if type(newVariation) == 'number' then
       newEntity.graphics_variation = newVariation
     end
