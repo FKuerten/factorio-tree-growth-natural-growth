@@ -156,7 +156,7 @@ local growTree = function(entry)
     -- force?
   })
   if newEntity then
-    if type(newVaration) == 'number' then
+    if type(newVariation) == 'number' then
       newEntity.graphics_variation = newVariation
     end
     -- it appears that create_entity does not trigger events
