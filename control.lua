@@ -150,6 +150,12 @@ local growTree = function(entry)
   local surface = entity.surface
   local position = entity.position
   local newVariation = entry.variation
+  
+  -- TODO add support for keeping color 
+  --local oldColor = 
+  
+  -- TODO add support for keeping deconstruction, but currently api does not yet support this
+  --local wasMarkedForDeconstruction = entity.to_be_deconstructed
   --surface.print("tree grown: " .. entity.prototype.name .. " to " .. nextName)
   entity.destroy()
   local newEntity = surface.create_entity({
