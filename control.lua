@@ -120,6 +120,7 @@ local onTreePlaced = function(entity)
 
   -- Decide when to upgrade
   local delay = nextTree.minDelay + round(math.random() * (nextTree.maxDelay - nextTree.minDelay))
+  delay = delay * settings.global['tgng-time-scale'].value
 
   local data = {
     entity = entity,
