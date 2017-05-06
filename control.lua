@@ -1,5 +1,6 @@
 local round = function(x) return math.floor(x+0.5) end
 
+local onEntityPlaced -- forward
 local initialize = function()
   if not global.growingTrees then
     global.growingTrees = {}
@@ -134,7 +135,7 @@ local onTreePlaced = function(entity)
   global.nextGrowth = global.growingTrees[1].tickUpgrade
 end
 
-local onEntityPlaced = function(event)
+onEntityPlaced = function(event)
   local entity = event.created_entity
   local subgroup = entity.prototype.subgroup.name
   --entity.surface.print("subgroup: " .. entity.prototype.subgroup.name)
