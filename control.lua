@@ -8,11 +8,17 @@ local initialize = function()
   if not global.groups then
     global.groups = remote.call("tree-growth-core", "getGroups")
   end
+  global.treePlantedEvent = remote.call("tree-growth-core", "getEvents")['on_tree_planted']
+  script.on_event(global.treePlantedEvent, onEntityPlaced)
 end
 
 local onConfigurationChanged = function()
   global.groups = nil
   global.treeData = nil
+  if global.treePlantedEvent then
+    script.on_event(global.treePlantedEvent, nil)
+    global.treePlantedEvent = nil
+  end
   initialize()
 end
 
@@ -171,7 +177,7 @@ local growTree = function(entry)
       newEntity.graphics_variation = newVariation
     end
     -- it appears that create_entity does not trigger events
-    script.raise_event(defines.events.on_built_entity, {name = "on_created_entity", tick=game.tick, created_entity = newEntity})
+    script.raise_event(global.treePlantedEvent, {created_entity = newEntity})
   end
 end
 
