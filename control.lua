@@ -1,6 +1,8 @@
 local round = function(x) return math.floor(x+0.5) end
 
 local onEntityPlaced -- forward
+
+local treePlantedEvent
 local initialize = function()
   if not global.growingTrees then
     global.growingTrees = {}
@@ -8,16 +10,16 @@ local initialize = function()
   if not global.groups then
     global.groups = remote.call("tree-growth-core", "getGroups")
   end
-  global.treePlantedEvent = remote.call("tree-growth-core", "getEvents")['on_tree_planted']
-  script.on_event(global.treePlantedEvent, onEntityPlaced)
+  treePlantedEvent = remote.call("tree-growth-core", "getEvents")['on_tree_planted']
+  script.on_event(treePlantedEvent, onEntityPlaced)
 end
 
 local onConfigurationChanged = function()
   global.groups = nil
   global.treeData = nil
-  if global.treePlantedEvent then
-    script.on_event(global.treePlantedEvent, nil)
-    global.treePlantedEvent = nil
+  if treePlantedEvent then
+    script.on_event(treePlantedEvent, nil)
+    treePlantedEvent = nil
   end
   initialize()
 end
@@ -177,7 +179,7 @@ local growTree = function(entry)
       newEntity.graphics_variation = newVariation
     end
     -- it appears that create_entity does not trigger events
-    script.raise_event(global.treePlantedEvent, {created_entity = newEntity})
+    script.raise_event(treePlantedEvent, {created_entity = newEntity})
   end
 end
 

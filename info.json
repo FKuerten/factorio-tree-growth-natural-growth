@@ -1,13 +1,13 @@
 {
   "name": "tree-growth-natural-growth",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "factorio_version": "0.15",
   "title": "Tree Growth: Natural Growth",
   "author": "Graveeater",
   "contact": "Graveeater on steam",
   "description": "Allows planted saplings to grow to trees.",
   "dependencies": 
-    [ "base >= 0.15.5"
-    , "tree-growth-core >= 2.0.0", "tree-growth-core < 3.0.0"
+    [ "base >= 0.15.12"
+    , "tree-growth-core >= 2.0.1", "tree-growth-core < 3.0.0"
     ]
 }
